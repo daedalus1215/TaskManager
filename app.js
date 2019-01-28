@@ -21,7 +21,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // routes
 app.get('/', function (req, res) {
-    res.send('Welcome!');
+    var title = 'Task List';
+    res.render('index', {
+        title: title
+    });
 })
 
 
