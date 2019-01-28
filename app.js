@@ -31,10 +31,15 @@ app.get('/', function (req, res) {
     var title = 'Task List';
 
     client.lrange('tasks', 0, -1, function (err, reply) {
+
+        client.hgetall('call', function (err, call) {
+            
         res.render('index', {
             title: title,
-            tasks: reply
-        });        
+            tasks: reply,
+            call: call
+        }); 
+        });
     });
 })
 

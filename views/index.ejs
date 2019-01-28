@@ -1,13 +1,41 @@
-<style>
-    .task-list__item:checked + span{
-        color:red;
-    }
 
-    .task-list {
-        list-style: none;
-    }
-</style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>RedisTasks</title>
+    <!-- Just use Bootswatch & Bootstrap starter template -->
+    <link rel="stylesheet" href="https://bootswatch.com/4/cerulean/bootstrap.min.css">
+    
+    <style>
+            .task-list__item:checked + span{
+                color:red;
+            }
+        
+            .task-list {
+                list-style: none;
+            }
 
+            .well {
+                background-color: #eee;
+                padding: 2em;
+                margin: 2em;
+            }
+        </style>
+
+</head>
+<body>
+    
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+                <a class="navbar-brand" href="#">RedisTasks</a>
+              </nav>
+  
+<div class="container">
+
+
+    
 
 <h3>Add Task</h3>
 <form method="POST" action="/task/add">
@@ -17,36 +45,60 @@
 </form>
 
 
-<%= title %>
 
-<form method="post" action="/task/delete">
-    <ul class="task-list">
-    <% tasks.forEach(function (task) { %>
-        <li>
-            <label>
-                <input type="checkbox" name="tasks" class="task-list__item" value="<%= task %>"><span><%= task %></span>
-            </label>
-            
-        </li>
-    <% }) %>
-    </ul>
-    <input type="submit" value="Remove">
-</form>
-<hr>
+    <div class="well">
+    <h3><%= title %></h3>
+    <form method="post" action="/task/delete">
+        <ul class="task-list">
+        <% tasks.forEach(function (task) { %>
+            <li>
+                <label>
+                    <input type="checkbox" name="tasks" class="task-list__item" value="<%= task %>"><span><%= task %></span>
+                </label>
+                
+            </li>
+        <% }) %>
+        </ul>
+        <input type="submit" value="Remove">
+    </form>
+</div>
+    <hr>
+    
+    <div class="well">
+        <h3>Next Business Call:</h3>
+        Name: <%= call.name %><br>
+        Company: <%= call.company %><br>
+        Phone: <%= call.phone %><br>
+        Time: <%= call.time %><br>
+    </div>
+    
+    <div class="well">
+        <h3>Edit Next Call</h3>
+        <form method="POST" action="/call/add">
+            <label>Contact Name</label><br>
+            <input type="text" name="name" placeholder="Task Name">
+            <br><br>
+            <label>Company</label><br>
+            <input type="text" name="company" placeholder="Company">
+            <br><br>
+            <label>Phone</label><br>
+            <input type="text" name="phone" placeholder="Phone">
+            <br><br>
+            <label>Day & Time</label><br>
+            <input type="text" name="time" placeholder="Time">
+            <br><br>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
 
-<h3>Edit Next Call</h3>
-<form method="POST" action="/call/add">
-    <label>Contact Name</label><br>
-	<input type="text" name="name" placeholder="Task Name">
-	<br><br>
-	<label>Company</label><br>
-	<input type="text" name="company" placeholder="Company">
-	<br><br>
-	<label>Phone</label><br>
-	<input type="text" name="phone" placeholder="Phone">
-	<br><br>
-	<label>Day & Time</label><br>
-	<input type="text" name="time" placeholder="Time">
-	<br><br>
-	<input type="submit" value="Submit">
-</form>
+</div><!-- /.container -->
+
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+<script src="../../dist/js/bootstrap.min.js"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+</body>
+</html>
+
