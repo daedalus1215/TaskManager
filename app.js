@@ -72,6 +72,28 @@ app.post('/task/delete', function (req, res) {
 });
 
 
+app.post('/call/add', function (req, res) {
+    var newCall = {};
+
+    newCall.name = req.body.name;
+    newCall.company = req.body.company;
+    newCall.phone = req.body.phone;
+    newCall.time = req.body.time;
+
+    client.hmset('call', 
+        ['name', newCall.name, 'company', newCall.company, 'phone', newCall.phone, 'time', newCall.time], 
+        function (err, reply) {
+            if (err) {
+                console.log(err);
+            }
+
+            console.log(reply);
+            res.redirect("/");
+        }
+    );
+});
+
+
 // start server
 app.listen(3000);
 console.log('Server started on port 3000');
