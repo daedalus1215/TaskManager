@@ -19,12 +19,24 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 
+// Create Redis Client
+var client = redis.createClient();
+client.on('connect', function () {
+    console.log('Redis Server Connected...');
+});
+
+
 // routes
 app.get('/', function (req, res) {
     var title = 'Task List';
-    res.render('index', {
-        title: title
+
+    client.lrange('tasks', 0, -1, function (err, reply) {
+        res.render('index', {
+            title: title,
+            tasks: reply
+        });        
     });
+
 })
 
 
