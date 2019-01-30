@@ -1,2 +1,2 @@
 # TaskManager
-Redis based Task Manager
+Node, Express, ejs, MySQL based Task Manager App
