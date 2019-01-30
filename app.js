@@ -2,8 +2,7 @@ var express = require('express');
 var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
-var redis = require('redis');
-
+var mysql = require('mysql');
 
 // Setup Express server
 var app = express();
@@ -20,83 +19,91 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 // Create Redis Client
-var client = redis.createClient();
-client.on('connect', function () {
-    console.log('Redis Server Connected...');
+var mysql = require('mysql');
+var connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: 'root',
+    database: 'task_tracker'
 });
+
+// connection.on('connect', function () {
+//     console.log('MySQL Server Connected...');
+//     connection.end();
+// });
 
 
 // routes
 app.get('/', function (req, res) {
     var title = 'Task List';
 
-    client.lrange('tasks', 0, -1, function (err, reply) {
-
-        client.hgetall('call', function (err, call) {
-            
+    connection.query('SELECT * FROM tasks', function (err, results, fields) {
+        if (err) console.log(err);
         res.render('index', {
             title: title,
-            tasks: reply,
-            call: call
-        }); 
+            tasks: results ? results : false
         });
+
+        // console.log(results[0].description);
     });
-})
-
-
-app.post('/task/add', function (req, res) {
-    var task = req.body.task;
-
-    client.rpush('tasks', task, function (err, reply) {
-        if (err) {
-            console.log(err);
-        }
-        console.log('Task Added');
-        res.redirect('/');
-    })
+    // connection.end();
 
 });
 
 
-app.post('/task/delete', function (req, res) {
-    var tasksToDelete = req.body.tasks
+// app.post('/task/add', function (req, res) {
+//     var task = req.body.task;
 
-    client.lrange('tasks', 0, -1, function (err, tasks) {
-        for (var i = 0; i < tasks.length; i++) {
-            if (tasksToDelete.indexOf(tasks[i]) > -1) {
-                client.lrem('tasks', 0, tasks[i], function (err) {
-                    if (err) {
-                        console.log(err);
-                    }
-                });
-            }
-        }
+//     client.rpush('tasks', task, function (err, reply) {
+//         if (err) {
+//             console.log(err);
+//         }
+//         console.log('Task Added');
+//         res.redirect('/');
+//     })
 
-        res.redirect("/");
-    });
-});
+// });
 
 
-app.post('/call/add', function (req, res) {
-    var newCall = {};
+// app.post('/task/delete', function (req, res) {
+//     var tasksToDelete = req.body.tasks
 
-    newCall.name = req.body.name;
-    newCall.company = req.body.company;
-    newCall.phone = req.body.phone;
-    newCall.time = req.body.time;
+//     client.lrange('tasks', 0, -1, function (err, tasks) {
+//         for (var i = 0; i < tasks.length; i++) {
+//             if (tasksToDelete.indexOf(tasks[i]) > -1) {
+//                 client.lrem('tasks', 0, tasks[i], function (err) {
+//                     if (err) {
+//                         console.log(err);
+//                     }
+//                 });
+//             }
+//         }
 
-    client.hmset('call', 
-        ['name', newCall.name, 'company', newCall.company, 'phone', newCall.phone, 'time', newCall.time], 
-        function (err, reply) {
-            if (err) {
-                console.log(err);
-            }
+//         res.redirect("/");
+//     });
+// });
 
-            console.log(reply);
-            res.redirect("/");
-        }
-    );
-});
+
+// app.post('/call/add', function (req, res) {
+//     var newCall = {};
+
+//     newCall.name = req.body.name;
+//     newCall.company = req.body.company;
+//     newCall.phone = req.body.phone;
+//     newCall.time = req.body.time;
+
+//     client.hmset('call',
+//         ['name', newCall.name, 'company', newCall.company, 'phone', newCall.phone, 'time', newCall.time],
+//         function (err, reply) {
+//             if (err) {
+//                 console.log(err);
+//             }
+
+//             console.log(reply);
+//             res.redirect("/");
+//         }
+//     );
+// });
 
 
 // start server
