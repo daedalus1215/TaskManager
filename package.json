@@ -5,7 +5,9 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "nodemon": ".\\node_modules\\.bin\\nodemon"
+    "nodemon": ".\\node_modules\\.bin\\nodemon",
+    "compile:sass": ".\\node_modules\\.bin\\node-sass sass/main.scss public/css/style.css",
+    "watch:sass": ".\\node_modules\\.bin\\node-sass sass/main.scss public/css/style.css -w"
   },
   "repository": {
     "type": "git",
@@ -23,6 +25,7 @@
     "express": "^4.16.4",
     "morgan": "^1.9.1",
     "mysql": "^2.16.0",
+    "node-sass": "^4.11.0",
     "nodemon": "^1.18.9",
     "redis": "^2.8.0"
   }

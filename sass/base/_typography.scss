@@ -1,0 +1,89 @@
+
+body {
+    font-family: "Lato", sans-serif; /* anything related to font we always set as high as the body, no higher (do not apply to universal select [*]) */
+    font-weight: 400;
+    line-height: 1.7; /* basically the line height is 1.7 x bigger than the predefined line height, that we would have before we added this. */
+    color: $color-grey-dark;
+}
+
+
+.heading-primary {
+    color: $color-white;
+    text-transform: uppercase;
+    margin-bottom: 6rem;
+
+    backface-visibility: hidden; /* this determines if the back part of an element (when we move it) is hidden. So the element behind the selected element - fixes the shaky animation issue that happens when you animate things (this element's children animate things). */
+
+    &--main {
+        display: block;
+        font-size: 6rem;
+        font-weight: 400;
+        letter-spacing: 3.5rem;
+    
+        /* A more explicit way doing animations vs .heading-primary-sub's implied way. */
+        animation-name: moveInLeft;
+        animation-duration: 1s; 
+        animation-timing-function: ease-out;
+
+        @include respond(phone) {
+            letter-spacing: 1rem;
+            font-size: 5rem;
+        }
+    }
+
+    &--sub {
+        display: block;
+        font-size: 2rem;
+        font-weight: 400;
+        letter-spacing: 1.7em;
+        /* A more implied way of doing animations vs .heading-primary-main's explicit way. */
+        animation: moveInRight 1s ease-out;
+
+        @include respond(phone) {
+            letter-spacing: .5rem;
+        }
+    }
+}
+
+
+.heading-secondary {
+    font-size: 3.5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    background-image: linear-gradient(to right, $color-primary-light, $color-primary-dark);
+    display: inline-block;
+    -webkit-background-clip: text; // this will clip the background where the text is. 
+    color: transparent; // make the color of the text transparent so we can get the background color to leak through.
+    transition: all .2s;
+    letter-spacing: 2px;
+
+    @include respond(tab-port) {
+        font-size: 3rem;        
+    }
+
+    @include respond(phone) {
+        font-size: 2.5rem;        
+    }
+
+    &:hover {
+        transform: skewY(2deg) skewX(15deg) scale(1.1);
+        text-shadow: .5rem 1rem 2rem rgba($color-black, .2);
+    }
+}
+
+
+
+
+.heading-tertiary {
+    font-size: 1.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.paragraph {
+    font-size: 1.6rem;
+    
+    &:not(:last-child) {
+        margin-bottom: 3rem;
+    }
+}

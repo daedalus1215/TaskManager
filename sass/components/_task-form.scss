@@ -1,0 +1,22 @@
+.task-form {
+
+    &__description {
+        width: 10em;
+        margin: auto;
+        display: block; 
+    }
+
+    &__btns {
+        width: 10em;
+        margin:auto;
+        display: block;
+    }
+
+    &__start-btn {
+        display: inline;
+    }
+
+    &__stop-btn {
+        display: inline;
+    }
+}
