@@ -3,6 +3,8 @@ var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 var mysql = require('mysql');
+const querystring = require('querystring');  
+var url = require('url');
 
 // Setup Express server
 var app = express();
@@ -43,11 +45,16 @@ app.get('/', function (req, res) {
             title: title,
             tasks: results ? results : false
         });
-
-        // console.log(results[0].description);
     });
-    // connection.end();
+});
 
+app.get('/api/tasks/:taskId', async function (req, res) {
+    var id = req.params.taskId;
+    
+    await connection.query("SELECT * FROM `tasks` WHERE `idtasks` = ? ", [id], function (error, results, fields) {
+        res.status(200);
+        res.json(results);    
+    });
 });
 
 

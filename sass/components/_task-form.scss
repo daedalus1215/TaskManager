@@ -1,14 +1,27 @@
 .task-form {
-
     &__description {
+        width: 600px;
+        height: 9.5em;
+        border: 3px solid #cccccc;
+        padding: 5px;
+        font-family: Tahoma, sans-serif;
+        margin: auto;
+        display: block;
+    }
+
+    &__current-time {
+
         width: 10em;
         margin: auto;
-        display: block; 
+        display: block;
+        text-align: center;
+    
     }
 
     &__btns {
+        text-align: center;
         width: 10em;
-        margin:auto;
+        margin: auto;
         display: block;
     }
 

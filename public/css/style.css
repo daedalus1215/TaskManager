@@ -24,7 +24,7 @@ ORDER: Base + typography > (then) general layout + grid > (then) page layout > (
   /* box-sizing set in body, and now we force inheritance. */ }
 
 html {
-  font-size: 100%; }
+  font-size: 16px; }
   @media only screen and (max-width: 75em) {
     html {
       font-size: 56.25%; } }
@@ -253,11 +253,22 @@ body {
     color: #55c57a; }
 
 .task-form__description {
-  width: 10em;
+  width: 600px;
+  height: 9.5em;
+  border: 3px solid #cccccc;
+  padding: 5px;
+  font-family: Tahoma, sans-serif;
   margin: auto;
   display: block; }
 
+.task-form__current-time {
+  width: 10em;
+  margin: auto;
+  display: block;
+  text-align: center; }
+
 .task-form__btns {
+  text-align: center;
   width: 10em;
   margin: auto;
   display: block; }

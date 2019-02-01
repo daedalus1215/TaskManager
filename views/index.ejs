@@ -3,7 +3,6 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>RedisTasks</title>
@@ -35,40 +34,6 @@
 
             .w407 {
                 width: 407px;
-            }
-
-
-
-            #example {
-                min-height:500px;
-            }
-            #undo {
-                text-align: center;
-                position: absolute;
-                white-space: nowrap;
-                padding: 1em;
-                cursor: pointer;
-            }
-            .armchair {
-                float: left;
-                margin: 30px 30px 120px 30px;
-                text-align: center;
-            }
-            .armchair img {
-                display: block;
-                margin-bottom: 10px;
-            }
-            .k-window-content a {
-                color: #BBB;
-            }
-            .k-window-content p {
-                margin-bottom: 1em;
-            }
-
-            @media screen and (max-width: 1023px) {
-                div.k-window {
-                    display: none !important;
-                }
             }
         </style>
 
@@ -103,10 +68,9 @@
                 <form method="post" action="/task/delete">
                     <ul class="task-list">
                         <% tasks.forEach(function (task) { %>
-                        <li class="task-list__item">
+                        <li>
                             <label>
-                                <span>
-                                    <%= task.description %></span>
+                                    <a href="#popup" id="<%= task.idtasks %>" class="task-list__item"><%= task.description %></a>
                             </label>
                         </li>
                         <hr>
@@ -121,7 +85,8 @@
         <div class="popup" id="popup">
             <div class="popup__content">
                 <div class="task-form">
-                    <div class="task-form__description"><input type="text" placeholder="Description" name="description"></div>
+                    <textarea maxlength="255" rows="4" cols="100" class="task-form__description"></textarea>
+                    <div class="task-form__current-time">00:00:00 - 01:12:25</div>
                     <div class="task-form__btns">
                         <div class="task-form__start-btn"><input type="button" value="Start" class="btn btn-success" /></div>
                         <div class="task-form__stop-btn"><input type="button" value="Stop" class="btn btn-danger" /></div>
@@ -136,7 +101,24 @@
 
     <script src="/jquery.min.js"></script>
 
-    <script src="/index.js"></script>
+    <script>
+        $(document).ready(function () {
+
+
+            //@todo: left off here making a modal of some sort.
+            // modal + ajax call to get the data?
+
+
+            jQuery(".task-list__item").on("click", function (e) {
+                $.ajax({url: "/api/tasks/"+this.id, success: function(result){
+                    $(".task-form__id").val(result[0].idtasks);
+                    $("textarea.task-form__description").val(result[0].description);
+                  }});
+            });
+
+        });
+
+    </script>
 </body>
 
 </html>
